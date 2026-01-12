@@ -1,0 +1,1425 @@
+﻿class TemplateGenerator {
+    constructor() {
+        this.configRowCounter = 1;
+        this.foreignKeyCounter = 0;
+        this.currentEventSource = null;
+        this.generatedTemplateContent = '';
+        this.csvContent = null;
+        this.storage = this.createStorage();
+        this.toastManager = window.toastManager;
+
+        this.templateConfig = {
+            [CONSTANTS.TEMPLATE_TYPES.CONFIG]: {
+                section: '#configTemplateSection',
+                requiredFields: [CONSTANTS.SELECTORS.CLASSES.CONFIG_CODE, CONSTANTS.SELECTORS.CLASSES.CONFIG_VALUE1],
+                hideObjects: true
+            },
+            [CONSTANTS.TEMPLATE_TYPES.PERMISSION]: {
+                section: null,
+                requiredFields: [],
+                hideObjects: false
+            },
+            [CONSTANTS.TEMPLATE_TYPES.DATA]: {
+                section: null,
+                requiredFields: [],
+                hideObjects: false
+            },
+            [CONSTANTS.TEMPLATE_TYPES.INSERT_UPDATE]: {
+                section: '#insertUpdateTemplateSection',
+                requiredFields: [CONSTANTS.SELECTORS.DROPDOWNS.TABLE_NAME],
+                hideObjects: true
+            },
+            [CONSTANTS.TEMPLATE_TYPES.SP]: {
+                section: null,
+                requiredFields: [],
+                hideObjects: false
+            }
+        };
+
+        this.init();
+    }
+
+    createStorage() {
+        return {
+            set: function (key, value) {
+                try {
+                    sessionStorage.setItem(key, JSON.stringify(value));
+                } catch (e) {
+                    console.warn('Session storage not available');
+                }
+            },
+            get: function (key) {
+                try {
+                    const item = sessionStorage.getItem(key);
+                    return item ? JSON.parse(item) : null;
+                } catch (e) {
+                    console.warn('Session storage not available');
+                    return null;
+                }
+            },
+            remove: function (key) {
+                try {
+                    sessionStorage.removeItem(key);
+                } catch (e) {
+                    console.warn('Session storage not available');
+                }
+            },
+            clear: function () {
+                try {
+                    sessionStorage.clear();
+                } catch (e) {
+                    console.warn('Session storage not available');
+                }
+            }
+        };
+    }
+
+    init() {
+        this.bindEvents();
+        this.initializeSelections();
+    }
+
+    bindEvents() {
+        $(CONSTANTS.SELECTORS.DROPDOWNS.SERVER).on('change', () => this.onServerChange());
+        $(CONSTANTS.SELECTORS.DROPDOWNS.DATABASE).on('change', () => this.onDatabaseChange());
+        $(CONSTANTS.SELECTORS.DROPDOWNS.TEMPLATE_TYPE).on('change', () => this.onTemplateTypeChange());
+        // Use internal debounce for better control and consistency
+        $(CONSTANTS.SELECTORS.DROPDOWNS.TABLE_NAME).on('input', this.debounce(() => this.onTableNameChange(), 1000));
+
+
+        $(CONSTANTS.SELECTORS.INPUTS.CSV_FILE).on('change', (e) => this.onCsvFileChange(e));
+
+        $(CONSTANTS.SELECTORS.INPUTS.TICKET_NUMBER).on('input', () => this.validateTicketNumber());
+        $(CONSTANTS.SELECTORS.INPUTS.OBJECT_NAMES).on('input', () => this.validateObjects());
+
+        $(CONSTANTS.SELECTORS.BUTTONS.GENERATE).on('click', () => this.generateTemplate());
+        $(CONSTANTS.SELECTORS.BUTTONS.DOWNLOAD).on('click', () => this.downloadTemplate());
+
+        $(CONSTANTS.SELECTORS.BUTTONS.ADD_CONFIG_ROW).on('click', () => this.addConfigRow());
+        $(CONSTANTS.SELECTORS.BUTTONS.CLEAR_SELECTIONS).on('click', () => this.clearSelections());
+
+        $(document).on('click', CONSTANTS.SELECTORS.CLASSES.REMOVE_CONFIG_ROW, (e) => this.removeConfigRow(e.currentTarget));
+    }
+
+    async apiCall(method, url, data = null) {
+        const token = document.querySelector(CONSTANTS.SELECTORS.INPUTS.REQUEST_VERIFICATION_TOKEN).value;
+        const options = {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'RequestVerificationToken': token
+            }
+        };
+
+        if (data) {
+            options.body = JSON.stringify(data);
+        }
+
+        try {
+            const response = await fetch(url, options);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('API call failed:', error);
+            throw error;
+        }
+    }
+
+    async onServerChange() {
+        const serverName = $(CONSTANTS.SELECTORS.DROPDOWNS.SERVER).val();
+        console.log('Server changed to:', serverName);
+
+        this.storage.set(CONSTANTS.STORAGE_KEYS.SELECTED_SERVER, serverName);
+
+        // Disable to prevent race conditions
+        const $serverDropdown = $(CONSTANTS.SELECTORS.DROPDOWNS.SERVER);
+        $serverDropdown.prop('disabled', true);
+
+        if (this.toastManager && this.toastManager.showInfo) {
+            this.toastManager.showInfo('Loading databases, please wait...');
+        }
+
+        if (!serverName) {
+            $(CONSTANTS.SELECTORS.DROPDOWNS.DATABASE).html('<option value="">-- Select Database --</option>');
+            $serverDropdown.prop('disabled', false);
+            this.checkGenerateButton();
+            return;
+        }
+
+        $(CONSTANTS.SELECTORS.DROPDOWNS.DATABASE).html('<option value="">-- Loading databases... --</option>').prop('disabled', true);
+
+        try {
+            const databases = await this.apiCall('GET', `${CONSTANTS.API.GET_DATABASES}?serverName=${encodeURIComponent(serverName)}`);
+            this.populateDatabases(databases);
+            if (this.toastManager && this.toastManager.showSuccess) {
+                this.toastManager.showSuccess(CONSTANTS.MESSAGES.DATABASES_LOADED);
+            }
+        } catch (error) {
+            console.error('Error loading databases:', error);
+            if (this.toastManager && this.toastManager.showError) {
+                this.toastManager.showError(CONSTANTS.MESSAGES.DATABASES_LOAD_ERROR);
+            }
+            $(CONSTANTS.SELECTORS.DROPDOWNS.DATABASE).html('<option value="">-- Error loading databases --</option>');
+        } finally {
+            $(CONSTANTS.SELECTORS.DROPDOWNS.DATABASE).prop('disabled', false);
+            $(CONSTANTS.SELECTORS.DROPDOWNS.SERVER).prop('disabled', false);
+            this.checkGenerateButton();
+        }
+    }
+
+    async onDatabaseChange() {
+        const databaseName = $(CONSTANTS.SELECTORS.DROPDOWNS.DATABASE).val();
+        this.storage.set(CONSTANTS.STORAGE_KEYS.SELECTED_DATABASE, databaseName);
+        this.checkGenerateButton();
+
+        // Reload table columns if table name exists
+        const tableName = $(CONSTANTS.SELECTORS.DROPDOWNS.TABLE_NAME).val();
+        if (tableName) {
+            await this.loadTableColumns(tableName.trim());
+        }
+    }
+
+    onTemplateTypeChange() {
+        const templateType = $(CONSTANTS.SELECTORS.DROPDOWNS.TEMPLATE_TYPE).val();
+        this.storage.set(CONSTANTS.STORAGE_KEYS.TEMPLATE_TYPE, templateType);
+        this.showTemplateSection(templateType);
+        this.checkGenerateButton();
+    }
+
+    showTemplateSection(templateType) {
+        $(CONSTANTS.SELECTORS.CLASSES.TEMPLATE_SECTION).removeClass(CONSTANTS.SELECTORS.CLASSES.ACTIVE);
+
+        // Hide by default
+        $(CONSTANTS.SELECTORS.CONTAINERS.SQL_OBJECTS_SECTION).hide();
+
+        if (templateType) {
+            // Logic for specific templates that DO NOT need SQL Objects
+            if (templateType === CONSTANTS.TEMPLATE_TYPES.CONFIG ||
+                templateType === CONSTANTS.TEMPLATE_TYPES.INSERT_UPDATE ||
+                templateType === CONSTANTS.TEMPLATE_TYPES.BULK_INSERT) {
+                $(CONSTANTS.SELECTORS.CONTAINERS.SQL_OBJECTS_SECTION).hide();
+            } else {
+                // For SP, DATA, PERMISSION etc. show it
+                $(CONSTANTS.SELECTORS.CONTAINERS.SQL_OBJECTS_SECTION).fadeIn();
+            }
+
+            // Show specific section
+            // For Bulk Insert, we reuse the 'insertupdate' section (Table + CSV)
+            const typeKey = templateType === CONSTANTS.TEMPLATE_TYPES.BULK_INSERT
+                ? CONSTANTS.TEMPLATE_TYPES.INSERT_UPDATE
+                : templateType;
+
+            if (this.templateConfig[typeKey]) {
+                const section = this.templateConfig[typeKey].section;
+                if (section) {
+                    $(section).addClass(CONSTANTS.SELECTORS.CLASSES.ACTIVE);
+                }
+            }
+        }
+
+        // FIX: Initialize config section with one row when config template is selected
+        if (templateType === CONSTANTS.TEMPLATE_TYPES.CONFIG && $(`${CONSTANTS.SELECTORS.CONTAINERS.CONFIG_ROWS} ${CONSTANTS.SELECTORS.CLASSES.CONFIG_ROW}`).length === 0) {
+            this.addConfigRow();
+        }
+
+        // Handle specific UI elements for Bulk Insert vs Insert/Update
+        if (templateType === CONSTANTS.TEMPLATE_TYPES.BULK_INSERT) {
+            // Hide manual column inputs, show only Table + CSV
+            $(CONSTANTS.SELECTORS.CONTAINERS.TABLE_COLUMNS).hide();
+            $('.btn-add-row').hide(); // Assuming there's an add row button for manual entry if exists
+            $(CONSTANTS.SELECTORS.CONTAINERS.BULK_UPLOAD).show();
+        } else if (templateType === CONSTANTS.TEMPLATE_TYPES.INSERT_UPDATE) {
+            $(CONSTANTS.SELECTORS.CONTAINERS.TABLE_COLUMNS).show();
+            $(CONSTANTS.SELECTORS.CONTAINERS.BULK_UPLOAD).hide();
+        }
+
+        this.checkGenerateButton();
+    }
+
+    populateDatabases(databases) {
+        let options = '<option value="">-- Select Database --</option>';
+        if (databases && databases.length > 0) {
+            databases.forEach(db => {
+                options += `<option value="${db}">${db}</option>`;
+            });
+        } else {
+            options = '<option value="">-- No databases found --</option>';
+        }
+        $(CONSTANTS.SELECTORS.DROPDOWNS.DATABASE).html(options);
+    }
+
+    getTemplateTypeDisplayName(templateType) {
+        const types = {
+            'config': 'Configuration Template',
+            'permission': 'Permission Template',
+            'data': 'Data Template',
+            'insertupdate': 'Insert/Update Data Template',
+            'sp': 'Stored Procedure Template',
+            'bulkinsert': 'Bulk Insert Template'
+        };
+        return types[templateType] || 'SQL Template';
+    }
+
+    async onTableNameChange() {
+        let tableName = $(CONSTANTS.SELECTORS.DROPDOWNS.TABLE_NAME).val();
+
+        // Auto-trim to avoid issues with copy-paste spaces
+        if (tableName) {
+            tableName = tableName.trim();
+        }
+
+        this.storage.set(CONSTANTS.STORAGE_KEYS.TABLE_NAME, tableName);
+
+        if (tableName && tableName.length > 0) {
+            await this.loadTableColumns(tableName);
+        } else {
+            $(CONSTANTS.SELECTORS.CONTAINERS.TABLE_COLUMNS).html('');
+            this.checkGenerateButton();
+        }
+    }
+
+    async loadTableColumns(tableName) {
+        if (tableName) tableName = tableName.trim();
+        const server = $(CONSTANTS.SELECTORS.DROPDOWNS.SERVER).val();
+        const database = $(CONSTANTS.SELECTORS.DROPDOWNS.DATABASE).val();
+
+        if (!server || !database) {
+            return;
+        }
+
+        $(CONSTANTS.SELECTORS.CONTAINERS.TABLE_COLUMNS).html(`
+            <div class="loading-table">
+                <span class="spinner"></span> Loading table columns...
+            </div>
+        `);
+
+        try {
+            const columns = await this.apiCall('GET',
+                `${CONSTANTS.API.GET_TABLE_COLUMNS}?serverName=${encodeURIComponent(server)}&databaseName=${encodeURIComponent(database)}&tableName=${encodeURIComponent(tableName)}`);
+
+            // Prevent race condition: ensure selection hasn't changed
+            const currentServer = $(CONSTANTS.SELECTORS.DROPDOWNS.SERVER).val();
+            const currentDatabase = $(CONSTANTS.SELECTORS.DROPDOWNS.DATABASE).val();
+            // Note: TableName might differ if we support multi-table, but for single dropdown:
+            const currentTable = $(CONSTANTS.SELECTORS.DROPDOWNS.TABLE_NAME).val();
+
+            if (server !== currentServer || database !== currentDatabase || tableName !== currentTable) {
+                console.warn('Selection changed during column load, ignoring result.');
+                return;
+            }
+
+            this.currentTableColumns = columns;
+            this.renderTableColumns(columns);
+        } catch (error) {
+            console.error('Error loading table columns:', error);
+
+            // Provide more specific feedback
+            // If the error message suggests not found (based on typical 404 or backend message)
+            let errorMessage = 'Error loading table structure. Please check your connection and table name.';
+            let isNotFound = error.message && (error.message.includes('404') || error.message.includes('not found'));
+
+            if (isNotFound) {
+                errorMessage = `Table '${tableName}' not found. Please check the spelling.`;
+                $(CONSTANTS.SELECTORS.CONTAINERS.TABLE_COLUMNS).html(`
+                    <div class="table-not-found" style="color: #6b7280; border-color: #e5e7eb;">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        ${errorMessage}
+                    </div>
+                `);
+            } else {
+                // Critical error
+                $(CONSTANTS.SELECTORS.CONTAINERS.TABLE_COLUMNS).html(`
+                    <div class="table-not-found">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        ${errorMessage}
+                    </div>
+                `);
+            }
+        }
+
+        this.checkGenerateButton();
+    }
+
+    renderTableColumns(columns) {
+        if (!columns || columns.length === 0) {
+            $(CONSTANTS.SELECTORS.CONTAINERS.TABLE_COLUMNS).html(`
+                <div class="table-not-found">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Table not found or no columns available. Please check the table name.
+                </div>
+                `);
+            return;
+        }
+
+        let html = '<div class="table-columns-grid">';
+
+        columns.forEach(column => {
+            if (column.isIdentity) return;
+
+            const isRequired = column.isNullable === 'NO' && !column.isIdentity;
+            const isPk = column.isPrimaryKey;
+            const inputType = this.getInputTypeForDataType(column.dataType);
+            const placeholder = isPk ? 'Auto-generated if empty' : this.getPlaceholderForDataType(column.dataType);
+
+            // Card classes
+            let cardClasses = 'column-card';
+            if (isPk) cardClasses += ' primary-key';
+            else if (isRequired) cardClasses += ' required-field';
+
+            html += `
+                <div class="${cardClasses}">
+                    <div class="column-header">
+                        <div class="column-info">
+                            <span class="column-name">
+                                ${column.columnName}
+                                ${isPk ? '<span class="pk-badge">PK</span>' : ''}
+                            </span>
+                            <span class="column-meta">
+                                ${column.dataType}${column.maxLength ? `(${column.maxLength})` : ''} 
+                                ${column.isNullable === 'YES' ? '(null)' : '(not null)'}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        ${inputType === 'checkbox' ? `
+                            <div class="toggle-wrapper" style="background: transparent; padding: 0; margin-top: 0.5rem; justify-content: flex-start; gap: 1rem;">
+                                <label class="toggle-switch toggle-success">
+                                    <input type="checkbox"
+                                        name="TableData.${column.columnName}"
+                                        class="checkbox-input column-input bit-value-toggle"
+                                        data-type="${column.dataType}"
+                                        data-is-nullable="${column.isNullable === 'YES'}"
+                                        data-is-primary-key="${column.isPrimaryKey}"
+                                        ${isRequired ? 'required' : ''}>
+                                    <span class="slider"></span>
+                                </label>
+                                <span class="bit-value-label" style="font-size: 0.9rem; font-weight: 500; min-width: 40px; color: var(--text-muted);">False</span>
+                            </div>
+                        ` : `
+                            <input type="${inputType}"
+                                name="TableData.${column.columnName}"
+                                class="form-input column-input"
+                                placeholder="${placeholder}"
+                                data-type="${column.dataType}"
+                                data-is-nullable="${column.isNullable === 'YES'}"
+                                data-is-primary-key="${column.isPrimaryKey}"
+                                ${isRequired ? 'required' : ''}>
+                        `}
+                    </div>
+
+                    <div class="toggle-wrapper">
+                        <span class="toggle-label">Use in WHERE clause</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" 
+                                   id="where_${column.columnName}" 
+                                   class="where-condition-checkbox"
+                                   data-column="${column.columnName}"
+                                   ${isPk ? 'checked' : ''}>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                `;
+        });
+
+        html += '</div>';
+
+        $(CONSTANTS.SELECTORS.CONTAINERS.TABLE_COLUMNS).html(html);
+
+        // Add event listeners
+        $(CONSTANTS.SELECTORS.CLASSES.COLUMN_INPUT).on('input change', (e) => this.onColumnInputChange(e.target));
+        $(CONSTANTS.SELECTORS.CLASSES.WHERE_CHECKBOX).on('change', () => this.onWhereCheckboxChange());
+
+        // Bit Toggle Listener
+        $(CONSTANTS.SELECTORS.CLASSES.BIT_VALUE_TOGGLE).on('change', function () {
+            const isChecked = $(this).is(':checked');
+            const $label = $(this).closest('.toggle-wrapper').find('.bit-value-label');
+            $label.text(isChecked ? 'True' : 'False');
+            $label.css('color', isChecked ? 'var(--success-color)' : 'var(--text-muted)');
+        });
+
+        // Load saved data
+        this.loadTableData();
+
+        // Trigger change to update labels after load
+        $(CONSTANTS.SELECTORS.CLASSES.BIT_VALUE_TOGGLE).trigger('change');
+
+        this.updateWhereConditionSummary();
+    }
+
+    getInputTypeForDataType(dataType) {
+        const typeMap = {
+            'bit': 'checkbox',
+            'int': 'number',
+            'bigint': 'number',
+            'smallint': 'number',
+            'tinyint': 'number',
+            'decimal': 'number',
+            'numeric': 'number',
+            'float': 'number',
+            'real': 'number',
+            'money': 'number',
+            'smallmoney': 'number',
+            'date': 'date',
+            'datetime': 'datetime-local',
+            'datetime2': 'datetime-local',
+            'smalldatetime': 'datetime-local',
+            'time': 'time'
+        };
+
+        return typeMap[dataType.toLowerCase()] || 'text';
+    }
+
+    getPlaceholderForDataType(dataType) {
+        const placeholderMap = {
+            'varchar': 'Enter text...',
+            'nvarchar': 'Enter text...',
+            'char': 'Enter text...',
+            'nchar': 'Enter text...',
+            'text': 'Enter text...',
+            'ntext': 'Enter text...',
+            'int': 'Enter number...',
+            'bigint': 'Enter number...',
+            'decimal': 'Enter decimal...',
+            'numeric': 'Enter number...',
+            'float': 'Enter decimal...',
+            'datetime': 'Select date and time...',
+            'date': 'Select date...',
+            'bit': 'True/False'
+        };
+
+        return placeholderMap[dataType.toLowerCase()] || 'Enter value...';
+    }
+
+    onColumnInputChange(input) {
+        this.validateColumnInput(input);
+        this.saveTableData();
+        this.checkGenerateButton();
+    }
+
+    onWhereCheckboxChange() {
+        this.saveTableData();
+        this.checkGenerateButton();
+        this.updateWhereConditionSummary();
+    }
+
+    validateColumnInput(input) {
+        const $input = $(input);
+        const value = $input.val();
+        const dataType = $input.data('type');
+        const isNullable = $input.data('is-nullable');
+
+        // Clear previous validation
+        $input.removeClass('input-error input-success');
+
+        if (!value && !isNullable) {
+            $input.addClass('input-error');
+            return false;
+        }
+
+        // Basic type validation
+        if (value) {
+            switch (dataType.toLowerCase()) {
+                case 'int':
+                case 'bigint':
+                case 'smallint':
+                case 'tinyint':
+                    if (!/^-?\d+$/.test(value)) {
+                        $input.addClass('input-error');
+                        return false;
+                    }
+                    break;
+                case 'decimal':
+                case 'numeric':
+                case 'float':
+                case 'real':
+                    if (!/^-?\d*\.?\d+$/.test(value)) {
+                        $input.addClass('input-error');
+                        return false;
+                    }
+                    break;
+                case 'bit':
+                    if (!/^(true|false|0|1)$/i.test(value)) {
+                        $input.addClass('input-error');
+                        return false;
+                    }
+                    break;
+            }
+        }
+
+        $input.addClass('input-success');
+        return true;
+    }
+
+    updateWhereConditionSummary() {
+        const selectedColumns = [];
+        $(`${CONSTANTS.SELECTORS.CLASSES.WHERE_CHECKBOX}:checked`).each(function () {
+            selectedColumns.push($(this).data('column'));
+        });
+
+        // Ensure element exists if not present
+        let summaryElement = $(CONSTANTS.SELECTORS.CONTAINERS.WHERE_CONDITION_SUMMARY);
+        if (!summaryElement.length && $(CONSTANTS.SELECTORS.CONTAINERS.TABLE_COLUMNS).length) {
+            // Create summary relative to table container if missing
+            $(CONSTANTS.SELECTORS.CONTAINERS.TABLE_COLUMNS).before(`
+                <div id="whereConditionSummary" class="dynamic-section" style="margin-bottom:1rem; padding:1rem; background:rgba(30,41,59,0.5); border-radius:8px; border:1px solid rgba(255,255,255,0.05);">
+                    <h4 style="margin-bottom: 8px; font-size:1rem; display: flex; align-items: center; gap: 8px;">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                        Where Condition Columns
+                    </h4>
+                    <div class="form-hint">
+                        <strong>Selected keys:</strong>
+                        <span id="selectedWhereColumnsList" style="color: var(--primary-light); font-weight: 600; font-family:monospace;"></span>
+                    </div>
+                </div>
+                `);
+            summaryElement = $(CONSTANTS.SELECTORS.CONTAINERS.WHERE_CONDITION_SUMMARY);
+        }
+
+        const selectedList = selectedColumns.length > 0
+            ? selectedColumns.join(', ')
+            : '<span style="color: var(--text-muted); font-style:italic;">Auto-detect (Primary Key)</span>';
+
+        $(CONSTANTS.SELECTORS.CONTAINERS.SELECTED_WHERE_COLUMNS_LIST).html(selectedList);
+
+        // Remove the "input-error" adding logic completely
+        summaryElement.removeClass(CONSTANTS.SELECTORS.CLASSES.INPUT_ERROR);
+    }
+
+    saveTableData() {
+        const tableData = this.getTableData();
+        const whereClauseColumns = this.getWhereClauseColumns();
+        this.storage.set(CONSTANTS.STORAGE_KEYS.TABLE_DATA, tableData);
+        this.storage.set(CONSTANTS.STORAGE_KEYS.WHERE_CLAUSE_COLUMNS, whereClauseColumns);
+    }
+
+    getTableData() {
+        const tableData = {};
+        $(CONSTANTS.SELECTORS.CLASSES.COLUMN_INPUT).each(function () {
+            const $input = $(this);
+            const columnName = $input.attr('name').replace('TableData.', '');
+            const rawValue = $input.attr('type') === 'checkbox' ? $input.prop('checked') : $input.val();
+
+            // Construct object matching C# ColumnValue class
+            tableData[columnName] = {
+                Value: String(rawValue), // Ensure string for deserialization
+                DataType: $input.data('type') || '',
+                IsNullable: $input.data('is-nullable') === true,
+                IsPrimaryKey: $input.data('is-primary-key') === true,
+                // Fix: Removed extra space in selector
+                UseInWhereClause: $(`#where_${columnName}`).is(':checked')
+            };
+        });
+        return tableData;
+    }
+
+    getWhereClauseColumns() {
+        const whereColumns = [];
+        // Fix: Removed extra space in selector
+        $(`${CONSTANTS.SELECTORS.CLASSES.WHERE_CHECKBOX}:checked`).each(function () {
+            whereColumns.push($(this).data('column'));
+        });
+        return whereColumns;
+    }
+
+    loadTableData() {
+        const savedData = this.storage.get(CONSTANTS.STORAGE_KEYS.TABLE_DATA) || {};
+        const savedWhereColumns = this.storage.get(CONSTANTS.STORAGE_KEYS.WHERE_CLAUSE_COLUMNS) || '';
+
+        // Load column values
+        Object.keys(savedData).forEach(columnName => {
+            const $input = $(`[name = "TableData.${columnName}"]`);
+            if ($input.length) {
+                let savedValue = savedData[columnName];
+                // Handle complex object from new getTableData
+                if (savedValue && typeof savedValue === 'object' && savedValue.hasOwnProperty('Value')) {
+                    savedValue = savedValue.Value;
+                }
+
+                if ($input.attr('type') === 'checkbox') {
+                    // Handle string "true" or boolean true
+                    $input.prop('checked', savedValue === 'true' || savedValue === true);
+                } else {
+                    $input.val(savedValue);
+                }
+            }
+        });
+
+        // Load WHERE condition checkboxes
+        if (savedWhereColumns) {
+            let whereColumnsArray = [];
+            if (Array.isArray(savedWhereColumns)) {
+                whereColumnsArray = savedWhereColumns;
+            } else if (typeof savedWhereColumns === 'string') {
+                whereColumnsArray = savedWhereColumns.split(',');
+            }
+
+            $(CONSTANTS.SELECTORS.CLASSES.WHERE_CHECKBOX).each(function () {
+                const columnName = $(this).data('column');
+                $(this).prop('checked', whereColumnsArray.includes(columnName));
+            });
+        }
+    }
+
+    // FIX: Improved checkGenerateButton method with better validation
+    checkGenerateButton() {
+        const server = $(CONSTANTS.SELECTORS.DROPDOWNS.SERVER).val();
+        const database = $(CONSTANTS.SELECTORS.DROPDOWNS.DATABASE).val();
+        const templateType = $(CONSTANTS.SELECTORS.DROPDOWNS.TEMPLATE_TYPE).val();
+        const ticketNumber = $(CONSTANTS.SELECTORS.INPUTS.TICKET_NUMBER).val();
+        const objects = $(CONSTANTS.SELECTORS.INPUTS.OBJECT_NAMES).val();
+
+        console.log('Checking generate button:', { server, database, templateType, ticketNumber, objects });
+
+        // If no template type is selected, disable the button
+        if (!templateType) {
+            $(CONSTANTS.SELECTORS.BUTTONS.GENERATE).prop('disabled', true);
+            return;
+        }
+
+        let baseValid = server && database && templateType && ticketNumber && ticketNumber.trim();
+
+        if (!baseValid) {
+            $('#generateBtn').prop('disabled', true);
+            return;
+        }
+
+        // Template-specific validation
+        let templateSpecificValid = true;
+
+        if (templateType === CONSTANTS.TEMPLATE_TYPES.CONFIG) {
+            templateSpecificValid = this.validateConfigRows();
+            console.log('Config validation result:', templateSpecificValid);
+        } else if (templateType === CONSTANTS.TEMPLATE_TYPES.INSERT_UPDATE) {
+            const hasCsv = this.csvContent && this.csvContent.length > 0;
+            templateSpecificValid = hasCsv || this.validateTableData();
+            console.log('Insert/Update validation result:', templateSpecificValid);
+        } else if (templateType === CONSTANTS.TEMPLATE_TYPES.BULK_INSERT) {
+            const tableName = $(CONSTANTS.SELECTORS.DROPDOWNS.TABLE_NAME).val();
+            const hasCsv = this.csvContent && this.csvContent.length > 0;
+            templateSpecificValid = tableName && hasCsv;
+            console.log('Bulk Insert validation result:', templateSpecificValid);
+        } else {
+            // For other templates, require SQL objects
+            templateSpecificValid = objects && objects.trim();
+            console.log('Other templates validation result:', templateSpecificValid);
+        }
+
+        $(CONSTANTS.SELECTORS.BUTTONS.GENERATE).prop('disabled', !templateSpecificValid);
+        console.log('Final button state:', !templateSpecificValid ? 'disabled' : 'enabled');
+    }
+
+    onCsvFileChange(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                this.csvContent = e.target.result;
+                console.log('CSV Loaded, length:', this.csvContent.length);
+                this.checkGenerateButton();
+
+                // Optional: Disable manual inputs if CSV is loaded to avoid confusion
+                if (this.csvContent) {
+                    $(CONSTANTS.SELECTORS.CLASSES.COLUMN_INPUT).prop('disabled', true);
+                    // Maybe show a toast
+                }
+            };
+            reader.readAsText(file);
+        } else {
+            this.csvContent = null;
+            $(CONSTANTS.SELECTORS.CLASSES.COLUMN_INPUT).prop('disabled', false);
+            this.checkGenerateButton();
+        }
+    }
+
+    // FIX: Improved config validation
+    validateConfigRows() {
+        let hasValidRow = false;
+        let allRowsValid = true;
+
+        $(CONSTANTS.SELECTORS.CLASSES.CONFIG_ROW).each(function () {
+            const $row = $(this);
+            const $code = $row.find(CONSTANTS.SELECTORS.CLASSES.CONFIG_CODE);
+            const $value1 = $row.find(CONSTANTS.SELECTORS.CLASSES.CONFIG_VALUE1);
+            const code = $code.val();
+            const value1 = $value1.val();
+
+            // Validate Code - Specific User Color Request
+            $code.removeClass(`${CONSTANTS.SELECTORS.CLASSES.INPUT_ERROR} ${CONSTANTS.SELECTORS.CLASSES.INPUT_SUCCESS} `);
+            if (code && code.trim().length === 1) {
+                $code.addClass(CONSTANTS.SELECTORS.CLASSES.INPUT_ERROR);
+            } else if (code && code.trim().length > 1) {
+                $code.addClass(CONSTANTS.SELECTORS.CLASSES.INPUT_SUCCESS);
+            }
+
+            // Validate Value1 - Specific User Color Request
+            $value1.removeClass(`${CONSTANTS.SELECTORS.CLASSES.INPUT_ERROR} ${CONSTANTS.SELECTORS.CLASSES.INPUT_SUCCESS} `);
+            if (value1 && value1.trim().length === 1) {
+                $value1.addClass(CONSTANTS.SELECTORS.CLASSES.INPUT_ERROR);
+            } else if (value1 && value1.trim().length > 1) {
+                $value1.addClass(CONSTANTS.SELECTORS.CLASSES.INPUT_SUCCESS);
+            }
+
+            // Logical validity for button state
+            const codeValid = code && code.trim().length > 0;
+            const value1Valid = value1 && value1.trim().length > 0;
+            const rowValid = codeValid && value1Valid;
+
+            if (rowValid) {
+                hasValidRow = true;
+            }
+
+            if (!rowValid) {
+                allRowsValid = false;
+            }
+        });
+
+        return hasValidRow && allRowsValid;
+    }
+
+    validateTableData() {
+        const tableName = $(CONSTANTS.SELECTORS.DROPDOWNS.TABLE_NAME).val();
+        if (!tableName) return false;
+
+        let isValid = true;
+        // Fix: Removed extra space before [required]
+        $(`${CONSTANTS.SELECTORS.CLASSES.COLUMN_INPUT}[required]`).each(function () {
+            const $input = $(this);
+            const value = $input.attr('type') === 'checkbox' ? $input.prop('checked') : $input.val();
+
+            if (!value) {
+                isValid = false;
+                return false; // break loop
+            }
+        });
+
+        const whereColumnsSelected = $(`${CONSTANTS.SELECTORS.CLASSES.WHERE_CHECKBOX}:checked`).length > 0;
+        if (!whereColumnsSelected) {
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    // FIX: Improved initialization with better config handling
+    async initializeSelections() {
+        const savedServer = this.storage.get(CONSTANTS.STORAGE_KEYS.SELECTED_SERVER) || $(CONSTANTS.SELECTORS.DROPDOWNS.SERVER).val();
+        const savedDatabase = this.storage.get(CONSTANTS.STORAGE_KEYS.SELECTED_DATABASE) || '';
+        const savedTemplateType = this.storage.get(CONSTANTS.STORAGE_KEYS.TEMPLATE_TYPE) || $(CONSTANTS.SELECTORS.DROPDOWNS.TEMPLATE_TYPE).val();
+        const savedTicketNumber = this.storage.get(CONSTANTS.STORAGE_KEYS.TICKET_NUMBER) || $(CONSTANTS.SELECTORS.INPUTS.TICKET_NUMBER).val();
+        const savedObjectNames = this.storage.get(CONSTANTS.STORAGE_KEYS.OBJECT_NAMES) || $(CONSTANTS.SELECTORS.INPUTS.OBJECT_NAMES).val();
+        const savedConfigData = this.storage.get(CONSTANTS.STORAGE_KEYS.CONFIG_DATA) || [];
+        const savedTableName = this.storage.get(CONSTANTS.STORAGE_KEYS.TABLE_NAME) || $(CONSTANTS.SELECTORS.DROPDOWNS.TABLE_NAME).val();
+
+        console.log('Initializing with:', {
+            savedServer, savedDatabase, savedTemplateType, savedTicketNumber, savedObjectNames, savedConfigData
+        });
+
+        // Restore Inputs
+        if (savedTicketNumber) $(CONSTANTS.SELECTORS.INPUTS.TICKET_NUMBER).val(savedTicketNumber);
+        if (savedObjectNames) $(CONSTANTS.SELECTORS.INPUTS.OBJECT_NAMES).val(savedObjectNames);
+        if (savedTableName) $(CONSTANTS.SELECTORS.DROPDOWNS.TABLE_NAME).val(savedTableName.trim());
+        if (savedTemplateType) {
+            $(CONSTANTS.SELECTORS.DROPDOWNS.TEMPLATE_TYPE).val(savedTemplateType);
+            this.onTemplateTypeChange();
+        }
+
+        // Restore Server & Database Sequence
+        if (savedServer) {
+            $(CONSTANTS.SELECTORS.DROPDOWNS.SERVER).val(savedServer);
+
+            // Wait for databases to load
+            await this.onServerChange();
+
+            if (savedDatabase) {
+                // Verify the saved database actually exists in the loaded options
+                if ($(`${CONSTANTS.SELECTORS.DROPDOWNS.DATABASE} option[value = "${savedDatabase}"]`).length > 0) {
+                    $(CONSTANTS.SELECTORS.DROPDOWNS.DATABASE).val(savedDatabase);
+                    await this.onDatabaseChange();
+                } else {
+                    console.warn(`Saved database '${savedDatabase}' not found in server options.`);
+                }
+            }
+        }
+
+        // Restore Config Rows if Config Template
+        if (savedTemplateType === CONSTANTS.TEMPLATE_TYPES.CONFIG && savedConfigData && savedConfigData.length > 0) {
+            // Clear default row if present
+            $(CONSTANTS.SELECTORS.CONTAINERS.CONFIG_ROWS).empty();
+            savedConfigData.forEach(row => {
+                this.addConfigRow(row.Code, row.Value1);
+            });
+        }
+    }
+
+
+
+    updateDownloadButton() {
+        const hasTemplate = this.generatedTemplateContent && this.generatedTemplateContent.length > 0;
+        const server = $('#serverDropdown').val();
+        const database = $('#databaseDropdown').val();
+        const templateType = $('#templateType').val();
+        const ticketNumber = $('#ticketNumber').val();
+
+        const shouldShow = hasTemplate && server && database && templateType && ticketNumber && ticketNumber.trim();
+
+        if (shouldShow) {
+            $('#downloadBtn').show();
+        } else {
+            $('#downloadBtn').hide();
+        }
+    }
+
+    // FIX: Improved addConfigRow to properly initialize the first row
+    addConfigRow() {
+        const rowIndex = this.configRowCounter;
+        const displayNumber = this.configRowCounter + 1;
+
+        const newRow = $(`
+                < div class="config-row" data - row - index="${rowIndex}" >
+                <div class="config-row-header">
+                    <span class="config-row-title">Config Entry #${displayNumber}</span>
+                    <button type="button" class="remove-config-row">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                        Remove
+                    </button>
+                </div>
+                <div class="template-grid">
+                    <div class="form-group">
+                        <label class="form-label form-label-required">Config Code</label>
+                        <input type="text" name="Configs[${rowIndex}].Code"
+                               placeholder="e.g. SITE_NAME, MAX_USERS"
+                               class="form-input config-code" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label form-label-required">Config Value 1</label>
+                        <input type="text" name="Configs[${rowIndex}].Value1"
+                               placeholder="e.g. MySite, 100"
+                               class="form-input config-value1" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Config Value 2</label>
+                        <input type="text" name="Configs[${rowIndex}].Value2"
+                               placeholder="Optional second value"
+                               class="form-input config-value2">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <input type="text" name="Configs[${rowIndex}].Description"
+                               placeholder="Configuration description"
+                               class="form-input config-description">
+                    </div>
+                </div>
+            </div >
+                `);
+
+        $('#configRowsContainer').append(newRow);
+        this.configRowCounter++;
+
+        // Enable remove buttons for all rows except the first one
+        this.updateRemoveButtons();
+
+        // Add event listeners to new inputs
+        newRow.find('.config-code, .config-value1, .config-value2, .config-description').on('input', () => {
+            this.onConfigInputChange();
+        });
+
+        this.checkGenerateButton();
+    }
+
+    removeConfigRow(button) {
+        const row = $(button).closest('.config-row');
+        const rowIndex = row.data('row-index');
+
+        if ($('.config-row').length > 1) {
+            row.remove();
+            this.updateRemoveButtons();
+            this.saveConfigData();
+            this.checkGenerateButton();
+        }
+    }
+
+    updateRemoveButtons() {
+        const $rows = $('.config-row');
+        const $removeButtons = $('.remove-config-row');
+
+        if ($rows.length === 1) {
+            $removeButtons.prop('disabled', true).addClass('disabled');
+        } else {
+            $removeButtons.prop('disabled', false).removeClass('disabled');
+        }
+    }
+
+    onConfigInputChange() {
+        this.saveConfigData();
+        this.checkGenerateButton();
+    }
+
+    saveConfigData() {
+        const configData = [];
+        $('.config-row').each(function () {
+            const $row = $(this);
+            configData.push({
+                Code: $row.find('.config-code').val(),
+                Value1: $row.find('.config-value1').val(),
+                Value2: $row.find('.config-value2').val(),
+                Description: $row.find('.config-description').val()
+            });
+        });
+        this.storage.set('ConfigData', configData);
+    }
+
+    loadConfigData(configData) {
+        $('#configRowsContainer').empty();
+        this.configRowCounter = 0;
+
+        if (configData && configData.length > 0) {
+            configData.forEach((config, index) => {
+                this.addConfigRow();
+                const $row = $('.config-row').last();
+                $row.find('.config-code').val(config.Code || '');
+                $row.find('.config-value1').val(config.Value1 || '');
+                $row.find('.config-value2').val(config.Value2 || '');
+                $row.find('.config-description').val(config.Description || '');
+            });
+        } else {
+            // Add one default row if no saved data
+            this.addConfigRow();
+        }
+
+        this.updateRemoveButtons();
+        this.checkGenerateButton();
+    }
+
+    validateTicketNumber() {
+        const $input = $('#ticketNumber');
+        const value = $input.val();
+
+        $input.removeClass('input-error input-success');
+
+        if (value && value.trim().length === 1) {
+            $input.addClass('input-error');
+        } else if (value && value.trim().length > 1) {
+            $input.addClass('input-success');
+        }
+
+        // Save to storage
+        this.storage.set('TicketNumber', value);
+        this.checkGenerateButton();
+
+        // Return true if length > 0 (valid for button enablement), but color handles the specific user request
+        return value && value.trim().length > 0;
+    }
+
+    validateObjects() {
+        const $input = $('#objectNames');
+        const value = $input.val();
+
+        $input.removeClass('input-error input-success');
+
+        if (value && value.trim().length === 1) {
+            $input.addClass('input-error');
+        } else if (value && value.trim().length > 1) {
+            $input.addClass('input-success');
+        }
+
+        this.storage.set('ObjectNames', value);
+        this.checkGenerateButton();
+
+        return value && value.trim().length > 0;
+    }
+
+    validateBulkData() {
+        if (!this.csvContent || !this.currentTableColumns) return { isValid: true };
+
+        const rows = this.csvContent.split(/\r?\n/).filter(row => row.trim());
+        if (rows.length === 0) return { isValid: false, error: 'CSV file is empty' };
+
+        // Define audit columns to ignore
+        const auditColumns = ['createddate', 'createdby', 'updateddate', 'updatedby'];
+
+        // Filter table columns: exclude identity and audit columns
+        const validTableColumns = this.currentTableColumns.filter(c =>
+            !c.isIdentity &&
+            !auditColumns.includes(c.columnName.toLowerCase())
+        );
+
+        // check if upsert keys are included? 
+        // User requirements: "total column ... should equal to the number of input"
+
+        const inputColumnCount = rows[0].split(',').length;
+
+        if (inputColumnCount !== validTableColumns.length) {
+            return {
+                isValid: false,
+                error: `Column count mismatch.CSV has ${inputColumnCount} columns, but table requires ${validTableColumns.length} (excluding audit fields: CreatedDate, CreatedBy, UpdatedDate, UpdatedBy).`
+            };
+        }
+
+        // Validate types for all rows (skipping header if it exists? assuming no header for raw data or header matches? 
+        // Usually bulk insert CSVs include a header. Let's assume row 0 is header and validate from row 1.
+        // But if user didn't provide header, we might skip valid data.
+        // However, standard practice is header.
+        // Let's validate ALL rows, if row 0 fails, we assumes it's header and ignore it?
+        // Or simply iterate starting from 1 if rows > 1.
+
+        let startRow = 1;
+        if (rows.length === 1) startRow = 0; // If only 1 row, treat as data? Or header? Ambiguous.
+
+        // Optimization: if file is huge, maybe validate first 100 rows? "verify all" said user.
+        // We'll validate up to 1000 rows to be safe on performance, or all if small.
+        const maxRows = rows.length;
+
+        for (let i = startRow; i < maxRows; i++) {
+            const cells = rows[i].split(','); // Simple split
+
+            if (cells.length !== validTableColumns.length) {
+                return { isValid: false, error: `Row ${i + 1} has invalid column count.Expected ${validTableColumns.length}, found ${cells.length}.` };
+            }
+
+            for (let j = 0; j < validTableColumns.length; j++) {
+                const col = validTableColumns[j];
+                const rawVal = cells[j].trim();
+
+                // Helper to validate type
+                if (!this.isValidBulkValue(rawVal, col)) {
+                    return { isValid: false, error: `Validation failed at Row ${i + 1}, Column '${col.columnName}': Value '${rawVal}' is invalid for type ${col.dataType}.` };
+                }
+            }
+        }
+
+        return { isValid: true };
+    }
+
+    isValidBulkValue(val, col) {
+        // Handle Nulls
+        if (!val || val === '' || val.toLowerCase() === 'null') {
+            return col.isNullable === 'YES';
+        }
+
+        const type = col.dataType.toLowerCase();
+
+        if (type.includes('int') || type.includes('bigint') || type.includes('smallint') || type.includes('tinyint')) {
+            return /^-?\d+$/.test(val);
+        }
+
+        if (type.includes('decimal') || type.includes('numeric') || type.includes('money') || type.includes('float')) {
+            return /^-?\d*\.?\d+$/.test(val);
+        }
+
+        if (type.includes('bit')) {
+            return /^(true|false|0|1)$/i.test(val);
+        }
+
+        if (type.includes('date') || type.includes('time')) {
+            // Simple date check? Date.parse?
+            return !isNaN(Date.parse(val));
+        }
+
+        return true; // Varchar etc assume valid
+    }
+
+    debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    async generateTemplate() {
+        try {
+            const requestData = this.collectFormData();
+
+            // Validate required fields
+            if (!this.validateFormData(requestData)) {
+                if (this.toastManager && this.toastManager.showError) {
+                    this.toastManager.showError('Please fill all required fields');
+                }
+                return;
+            }
+
+            // Bulk Insert Verification
+            if (this.currentTableColumns && requestData.TemplateType === 'bulkinsert') {
+                const validation = this.validateBulkData();
+                if (!validation.isValid) {
+                    if (this.toastManager && this.toastManager.showError) {
+                        this.toastManager.showError(validation.error);
+                    }
+                    return;
+                }
+            }
+
+            this.showLoadingState();
+
+            const response = await this.apiCall('POST', '/Home/GenerateTemplate', requestData);
+
+            if (response.success) {
+                this.generatedTemplateContent = response.template;
+                this.displayGeneratedTemplate(response.template);
+                if (this.toastManager && this.toastManager.showSuccess) {
+                    this.toastManager.showSuccess('Template generated successfully!');
+                }
+            } else {
+                if (this.toastManager && this.toastManager.showError) {
+                    this.toastManager.showError(response.error || 'Failed to generate template');
+                }
+            }
+        } catch (error) {
+            console.error('Error generating template:', error);
+            if (this.toastManager && this.toastManager.showError) {
+                this.toastManager.showError('An error occurred while generating the template');
+            }
+        } finally {
+            this.hideLoadingState();
+        }
+    }
+
+    collectFormData() {
+        return {
+            ServerName: $('#serverDropdown').val(),
+            DatabaseName: $('#databaseDropdown').val(),
+            TemplateType: $('#templateType').val(),
+            TicketNumber: $('#ticketNumber').val(),
+            ObjectNames: $('#objectNames').val(),
+            TableName: $('#tableName').val(),
+            ConfigEntries: this.getConfigsData(),  // Changed from Configs to ConfigEntries to match Request model? Let me check Request model again.
+            // Request model has public List<ConfigEntry> ConfigEntries { get; set; }
+            // JS was sending 'Configs'.
+            ColumnValues: this.getTableData(), // Request model has ColumnValues (Dict) but here it's sending row data? 
+            // format: Dictionary<string, ColumnValue> ColumnValues;
+            // logic in getTableData needs to return that Structure if not already. 
+            // ... wait, let's fix the obvious ones first.
+
+            // Checking TemplateRequest.cs:
+            // public List<ConfigEntry> ConfigEntries { get; set; }
+            // public Dictionary<string, ColumnValue> ColumnValues { get; set; }
+            // public List<string> SelectedWhereColumns { get; set; }
+
+            // JS sends:
+            // Configs -> Mismatch?
+            // TableData -> Mismatch?
+            // WhereClauseColumns -> Mismatch?
+
+            // I should fix ALL of them.
+
+            ConfigEntries: this.getConfigsData(),
+            ColumnValues: this.getTableData(),
+            SelectedWhereColumns: this.getWhereClauseColumns(),
+            CsvContent: this.csvContent,
+            IsIdempotent: $('#useIdempotent').is(':checked')
+        };
+    }
+
+    getConfigsData() {
+        const configs = [];
+        $('.config-row').each(function () {
+            const $row = $(this);
+            configs.push({
+                Code: $row.find('.config-code').val(),
+                Value1: $row.find('.config-value1').val(),
+                Value2: $row.find('.config-value2').val(),
+                Description: $row.find('.config-description').val()
+            });
+        });
+        return configs;
+    }
+
+    validateFormData(data) {
+        if (!data.ServerName || !data.DatabaseName || !data.TemplateType || !data.TicketNumber) {
+            return false;
+        }
+
+        if (data.TemplateType === 'config') {
+            return data.ConfigEntries && data.ConfigEntries.length > 0 && data.ConfigEntries.every(config =>
+                config.Code && config.Value1
+            );
+        }
+
+        if (data.TemplateType === 'insertupdate') {
+            if (data.CsvContent && data.CsvContent.length > 0) return true;
+            return data.TableName && this.getWhereClauseColumns().length > 0;
+        }
+
+        if (data.TemplateType === 'bulkinsert') {
+            return data.CsvContent && data.CsvContent.length > 0 && data.TableName;
+        }
+
+        return true;
+    }
+
+    showLoadingState() {
+        $('#generateBtn').prop('disabled', true).html(`
+                < span class="spinner" style = "width: 16px; height: 16px;" ></span >
+                    Generating...
+            `);
+    }
+
+    hideLoadingState() {
+        $('#generateBtn').prop('disabled', false).html(`
+                < svg class="btn-icon" fill = "none" stroke = "currentColor" viewBox = "0 0 24 24" >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg >
+                Generate Template
+                    `);
+    }
+
+    displayGeneratedTemplate(template) {
+        $('#resultsSection').remove();
+
+        $('.main-card').after(`
+                    < div id = "resultsSection" class="results-section" >
+                        <div class="results-card">
+                            <div class="results-header">
+                                <h3 class="results-title">
+                                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    Generated SQL Template
+                                    <span class="template-badge badge-${$('#templateType').val()}">
+                                        ${$('#templateType').val().toUpperCase()}
+                                    </span>
+                                </h3>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <span class="results-badge">Ready to Download</span>
+                                    <span style="font-size: 0.875rem; color: #6b7280;">Ticket: ${$('#ticketNumber').val().toUpperCase()}</span>
+
+                                    <!-- Copy Button -->
+                                    <button type="button" class="copy-btn" title="Copy SQL to Clipboard">
+                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                                        </svg>
+                                        Copy Code
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="code-container">
+                                <pre id="finalCode" class="code-content">${template}</pre>
+                            </div>
+                        </div>
+            </div >
+                `);
+
+        this.updateDownloadButton();
+    }
+
+    downloadTemplate() {
+        if (!this.generatedTemplateContent) {
+            if (this.toastManager && this.toastManager.showError) {
+                this.toastManager.showError('No template content to download');
+            }
+            return;
+        }
+
+        try {
+            const requestData = this.collectFormData();
+            this.performDownload(requestData);
+        } catch (error) {
+            console.error('Error downloading template:', error);
+            if (this.toastManager && this.toastManager.showError) {
+                this.toastManager.showError('Failed to download template');
+            }
+        }
+    }
+
+    async performDownload(requestData) {
+        try {
+            const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+            const response = await fetch('/Home/DownloadTemplate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': token
+                },
+                body: JSON.stringify(requestData)
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = `#${requestData.TicketNumber.toUpperCase()}_${requestData.TemplateType}.sql`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+
+                if (this.toastManager && this.toastManager.showSuccess) {
+                    this.toastManager.showSuccess('Template downloaded successfully!');
+                }
+            } else {
+                throw new Error('Download failed');
+            }
+        } catch (error) {
+            console.error('Download error:', error);
+            if (this.toastManager && this.toastManager.showError) {
+                this.toastManager.showError('Failed to download template');
+            }
+        }
+    }
+
+    clearSelections() {
+        if (confirm('Are you sure you want to clear all selections?')) {
+            this.storage.clear();
+
+            // Reset form fields
+            $('#serverDropdown').val('');
+            $('#databaseDropdown').html('<option value="">-- Select Database --</option>');
+            $('#templateType').val('');
+            $('#ticketNumber').val('').removeClass('input-success input-error');
+            $('#objectNames').val('').removeClass('input-success input-error');
+            $('#tableName').val('');
+
+            // Clear CSV
+            $('#csvFile').val('');
+            $('#useIdempotent').prop('checked', false);
+            this.csvContent = null;
+            $('.column-input').prop('disabled', false);
+
+            // Clear config rows
+            $('#configRowsContainer').empty();
+            this.configRowCounter = 1;
+
+            // Clear table columns
+            $('#tableColumnsContainer').html('');
+
+            // Hide sections
+            $('.template-section').removeClass('active');
+            $('#sqlObjectsSection').show();
+            $('#resultsSection').remove();
+            $('#downloadBtn').hide();
+
+            // Reset button state
+            this.checkGenerateButton();
+
+            if (this.toastManager && this.toastManager.showSuccess) {
+                this.toastManager.showSuccess('All selections cleared!');
+            }
+        }
+    }
+}
+
+// Make it available globally
+window.TemplateGenerator = TemplateGenerator;

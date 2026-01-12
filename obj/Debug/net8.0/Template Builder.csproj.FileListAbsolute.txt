@@ -1,0 +1,140 @@
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\Template Builder.csproj.AssemblyReference.cache
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\Template Builder.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\Template Builder.AssemblyInfoInputs.cache
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\Template Builder.AssemblyInfo.cs
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\Template Builder.csproj.CoreCompileInputs.cache
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\Template Builder.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\Template Builder.RazorAssemblyInfo.cache
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\Template Builder.RazorAssemblyInfo.cs
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\appsettings.json
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Template Builder.staticwebassets.runtime.json
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Template Builder.staticwebassets.endpoints.json
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Template Builder.exe
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Template Builder.deps.json
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Template Builder.runtimeconfig.json
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Template Builder.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Template Builder.pdb
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Azure.Core.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Azure.Identity.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Microsoft.Identity.Client.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\System.Drawing.Common.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\System.Memory.Data.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\System.Runtime.Caching.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\System.Security.Permissions.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\System.Windows.Extensions.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\scopedcss\bundle\Template Builder.styles.css
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\scopedcss\projectbundle\Template Builder.bundle.scp.css
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\swae.build.ex.cache
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\Template.BD348C00.Up2Date
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\Template Builder.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\refint\Template Builder.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\Template Builder.pdb
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\Template Builder.genruntimeconfig.cache
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\ref\Template Builder.dll
+C:\Users\krish.maniar\Downloads\Documents\Template-Builder\Template-Builder-working last build-12-23\Template-Builder\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Apps\Template-Builder\bin\Debug\net8.0\appsettings.Development.json
+C:\Apps\Template-Builder\bin\Debug\net8.0\appsettings.json
+C:\Apps\Template-Builder\bin\Debug\net8.0\Template Builder.staticwebassets.runtime.json
+C:\Apps\Template-Builder\bin\Debug\net8.0\Template Builder.staticwebassets.endpoints.json
+C:\Apps\Template-Builder\bin\Debug\net8.0\Template Builder.exe
+C:\Apps\Template-Builder\bin\Debug\net8.0\Template Builder.deps.json
+C:\Apps\Template-Builder\bin\Debug\net8.0\Template Builder.runtimeconfig.json
+C:\Apps\Template-Builder\bin\Debug\net8.0\Template Builder.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\Template Builder.pdb
+C:\Apps\Template-Builder\bin\Debug\net8.0\Azure.Core.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\Azure.Identity.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\Microsoft.Identity.Client.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\System.Drawing.Common.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\System.Memory.Data.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\System.Runtime.Caching.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\System.Security.Permissions.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\System.Windows.Extensions.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Apps\Template-Builder\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Apps\Template-Builder\obj\Debug\net8.0\Template Builder.csproj.AssemblyReference.cache
+C:\Apps\Template-Builder\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Apps\Template-Builder\obj\Debug\net8.0\Template Builder.GeneratedMSBuildEditorConfig.editorconfig
+C:\Apps\Template-Builder\obj\Debug\net8.0\Template Builder.AssemblyInfoInputs.cache
+C:\Apps\Template-Builder\obj\Debug\net8.0\Template Builder.AssemblyInfo.cs
+C:\Apps\Template-Builder\obj\Debug\net8.0\Template Builder.csproj.CoreCompileInputs.cache
+C:\Apps\Template-Builder\obj\Debug\net8.0\Template Builder.MvcApplicationPartsAssemblyInfo.cache
+C:\Apps\Template-Builder\obj\Debug\net8.0\Template Builder.RazorAssemblyInfo.cache
+C:\Apps\Template-Builder\obj\Debug\net8.0\Template Builder.RazorAssemblyInfo.cs
+C:\Apps\Template-Builder\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Apps\Template-Builder\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Apps\Template-Builder\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Apps\Template-Builder\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Apps\Template-Builder\obj\Debug\net8.0\scopedcss\bundle\Template Builder.styles.css
+C:\Apps\Template-Builder\obj\Debug\net8.0\scopedcss\projectbundle\Template Builder.bundle.scp.css
+C:\Apps\Template-Builder\obj\Debug\net8.0\staticwebassets.build.json
+C:\Apps\Template-Builder\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Apps\Template-Builder\obj\Debug\net8.0\staticwebassets.development.json
+C:\Apps\Template-Builder\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Apps\Template-Builder\obj\Debug\net8.0\swae.build.ex.cache
+C:\Apps\Template-Builder\obj\Debug\net8.0\Template.BD348C00.Up2Date
+C:\Apps\Template-Builder\obj\Debug\net8.0\Template Builder.dll
+C:\Apps\Template-Builder\obj\Debug\net8.0\refint\Template Builder.dll
+C:\Apps\Template-Builder\obj\Debug\net8.0\Template Builder.pdb
+C:\Apps\Template-Builder\obj\Debug\net8.0\Template Builder.genruntimeconfig.cache
+C:\Apps\Template-Builder\obj\Debug\net8.0\ref\Template Builder.dll
+C:\Apps\Template-Builder\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

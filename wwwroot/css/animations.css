@@ -1,0 +1,309 @@
+/* =========================================
+   Professional UI Enhancements - Animation & Polish
+   ========================================= */
+
+:root {
+    /* Animation Timing */
+    --ease-elastic: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    --ease-squish: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Custom Scrollbar (Webkit) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.8);
+}
+
+/* Selection Color */
+::selection {
+    background: rgba(139, 92, 246, 0.3);
+    color: #a78bfa;
+    /* var(--primary-light) */
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Button Shimmer Effect for Primary */
+.btn-primary {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(120deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent);
+    transform: skewX(-20deg);
+    transition: 0.5s;
+    pointer-events: none;
+}
+
+.btn-primary:hover::after {
+    left: 100%;
+    transition: 0.5s;
+}
+
+/* Ripple Animation Element */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* New Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Stagger Utilities */
+.delay-100 {
+    animation-delay: 100ms;
+}
+
+.delay-200 {
+    animation-delay: 200ms;
+}
+
+.delay-300 {
+    animation-delay: 300ms;
+}
+
+.delay-400 {
+    animation-delay: 400ms;
+}
+
+.delay-500 {
+    animation-delay: 500ms;
+}
+
+.delay-700 {
+    animation-delay: 700ms;
+}
+
+.animate-fade-up {
+    animation: fadeInUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+
+/* Refined Interaction States */
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: #8b5cf6;
+    /* var(--primary-color) */
+    box-shadow: 0 0 0 1px #8b5cf6, 0 0 0 4px rgba(139, 92, 246, 0.25) !important;
+    background-color: rgba(30, 41, 59, 1);
+    transform: translateY(-1px);
+}
+
+/* =========================================
+   New UI Components
+   ========================================= */
+
+/* Custom File Upload */
+.file-upload-zone {
+    border: 2px dashed rgba(139, 92, 246, 0.3);
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    background: rgba(30, 41, 59, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.file-upload-zone:hover {
+    border-color: #a78bfa;
+    /* var(--primary-light) */
+    background: rgba(30, 41, 59, 0.6);
+    transform: translateY(-2px);
+}
+
+.file-upload-zone.active {
+    border-color: #8b5cf6;
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.file-upload-input {
+    position: absolute;
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.file-upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    color: #cbd5e1;
+    /* var(--text-secondary) */
+    pointer-events: auto;
+    /* Allow clicking on label contents */
+    width: 100%;
+    cursor: pointer;
+}
+
+.file-upload-icon {
+    width: 48px;
+    height: 48px;
+    color: #a78bfa;
+    margin-bottom: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.file-upload-zone:hover .file-upload-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Copy Button (Static Position) */
+.copy-btn {
+    position: relative;
+    /* Changed from absolute */
+    top: auto;
+    right: auto;
+    opacity: 1;
+    /* Always visible */
+    transform: none;
+    background: rgba(139, 92, 246, 0.1);
+    /* Slight tint */
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    color: #a78bfa;
+    /* Primary Light */
+    padding: 0.4rem 0.8rem;
+    border-radius: 9999px;
+    /* Pill shape like badge */
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.copy-btn:hover {
+    background: #8b5cf6;
+    color: white;
+    border-color: #8b5cf6;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.copy-btn.btn-success {
+    background: rgba(16, 185, 129, 0.1);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+/* Dropdown Animation Fixes */
+select.form-select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* Using a simpler, encoded SVG for compatibility */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23a78bfa'%3e%3cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.25em;
+    padding-right: 2.5rem;
+    transition: all 0.3s ease;
+}
+
+select.form-select:hover {
+    border-color: #a78bfa;
+    /* Highlight border on hover */
+    background-color: rgba(30, 41, 59, 0.8);
+}
+
+select.form-select:focus {
+    /* Flip arrow: rotate 180deg isn't possible on background-image easily without changing the URI */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%238b5cf6'%3e%3cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 15l7-7 7 7'/%3e%3c/svg%3e");
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 1px #8b5cf6, 0 0 0 4px rgba(139, 92, 246, 0.25);
+}
+
+/* Remove File Button */
+.btn-remove-file {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: var(--error-color, #ef4444);
+    background: transparent;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-remove-file:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: var(--error-color, #ef4444);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+}

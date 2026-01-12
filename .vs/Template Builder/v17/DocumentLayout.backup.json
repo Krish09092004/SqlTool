@@ -1,0 +1,477 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\services\\implementations\\sqltemplateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:services\\implementations\\sqltemplateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\models\\entities\\templaterequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:models\\entities\\templaterequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\wwwroot\\js\\templategenerator.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:wwwroot\\js\\templategenerator.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\services\\implementations\\templatetypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:services\\implementations\\templatetypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\wwwroot\\js\\site.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:wwwroot\\js\\site.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\wwwroot\\js\\toastmanager.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:wwwroot\\js\\toastmanager.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\services\\implementations\\sqlschemaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:services\\implementations\\sqlschemaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\services\\implementations\\sqlconnectionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:services\\implementations\\sqlconnectionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\services\\interfaces\\isqltemplateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:services\\interfaces\\isqltemplateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\services\\interfaces\\itemplatetypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:services\\interfaces\\itemplatetypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\services\\interfaces\\isqlschemaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:services\\interfaces\\isqlschemaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\services\\interfaces\\isqlconnectionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:services\\interfaces\\isqlconnectionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\models\\viewmodels\\templateviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:models\\viewmodels\\templateviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\models\\entities\\templatetypedefinition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:models\\entities\\templatetypedefinition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\models\\entities\\templatefield.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:models\\entities\\templatefield.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\models\\entities\\tablecolumninfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:models\\entities\\tablecolumninfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\models\\entities\\configentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:models\\entities\\configentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\models\\entities\\serverinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:models\\entities\\serverinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|c:\\users\\krish.maniar\\desktop\\template-builder\\template-builder\\models\\enums\\templatetype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{979BEFC0-180E-4A1A-69B8-0A11DE3EFA2B}|Template Builder.csproj|solutionrelative:models\\enums\\templatetype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 19,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{6324226f-61b6-4f28-92ee-18d4b5fe1e48}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "templateGenerator.js",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\wwwroot\\js\\templateGenerator.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\templateGenerator.js",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\wwwroot\\js\\templateGenerator.js",
+              "RelativeToolTip": "wwwroot\\js\\templateGenerator.js",
+              "ViewState": "AgIAADsEAAAAAAAAAADwv4QEAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-17T08:54:20.542Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TemplateTypeService.cs",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Services\\Implementations\\TemplateTypeService.cs",
+              "RelativeDocumentMoniker": "Services\\Implementations\\TemplateTypeService.cs",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Services\\Implementations\\TemplateTypeService.cs",
+              "RelativeToolTip": "Services\\Implementations\\TemplateTypeService.cs",
+              "ViewState": "AgIAADwAAAAAAAAAAADwv1cAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T08:52:42.918Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "site.js",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\wwwroot\\js\\site.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\site.js",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\wwwroot\\js\\site.js",
+              "RelativeToolTip": "wwwroot\\js\\site.js",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAuwHgAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-17T09:32:21.843Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABwAAABZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-10-23T07:28:27.048Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T08:54:33.966Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Controllers\\HomeController.cs",
+              "ViewState": "AgIAAJYAAAAAAAAAAAAQwKcAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-17T06:43:52.271Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SqlTemplateService.cs",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Services\\Implementations\\SqlTemplateService.cs",
+              "RelativeDocumentMoniker": "Services\\Implementations\\SqlTemplateService.cs",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Services\\Implementations\\SqlTemplateService.cs",
+              "RelativeToolTip": "Services\\Implementations\\SqlTemplateService.cs",
+              "ViewState": "AgIAADkAAAAAAAAAAAAgwEsAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T08:52:47.457Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TemplateRequest.cs",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Models\\Entities\\TemplateRequest.cs",
+              "RelativeDocumentMoniker": "Models\\Entities\\TemplateRequest.cs",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Models\\Entities\\TemplateRequest.cs",
+              "RelativeToolTip": "Models\\Entities\\TemplateRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAUAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T08:49:53.301Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "toastManager.js",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\wwwroot\\js\\toastManager.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\toastManager.js",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\wwwroot\\js\\toastManager.js",
+              "RelativeToolTip": "wwwroot\\js\\toastManager.js",
+              "ViewState": "AgIAAJoAAAAAAAAAAADwv7kAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-17T08:54:06.484Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAgBAAAAAAAAAAAAAA4BAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-17T06:41:30.166Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-17T09:21:51.819Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "wwwroot\\css\\site.css",
+              "ViewState": "AgIAAOQCAAAAAAAAAAAcwFwDAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-11-17T09:21:20.215Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "SqlSchemaService.cs",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Services\\Implementations\\SqlSchemaService.cs",
+              "RelativeDocumentMoniker": "Services\\Implementations\\SqlSchemaService.cs",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Services\\Implementations\\SqlSchemaService.cs",
+              "RelativeToolTip": "Services\\Implementations\\SqlSchemaService.cs",
+              "ViewState": "AgIAABcBAAAAAAAAAAAiwCoBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T08:52:38.698Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "SqlConnectionService.cs",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Services\\Implementations\\SqlConnectionService.cs",
+              "RelativeDocumentMoniker": "Services\\Implementations\\SqlConnectionService.cs",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Services\\Implementations\\SqlConnectionService.cs",
+              "RelativeToolTip": "Services\\Implementations\\SqlConnectionService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T08:52:34.091Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ISqlTemplateService.cs",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Services\\Interfaces\\ISqlTemplateService.cs",
+              "RelativeDocumentMoniker": "Services\\Interfaces\\ISqlTemplateService.cs",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Services\\Interfaces\\ISqlTemplateService.cs",
+              "RelativeToolTip": "Services\\Interfaces\\ISqlTemplateService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T08:52:18.817Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ITemplateTypeService.cs",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Services\\Interfaces\\ITemplateTypeService.cs",
+              "RelativeDocumentMoniker": "Services\\Interfaces\\ITemplateTypeService.cs",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Services\\Interfaces\\ITemplateTypeService.cs",
+              "RelativeToolTip": "Services\\Interfaces\\ITemplateTypeService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T08:52:14.195Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ISqlSchemaService.cs",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Services\\Interfaces\\ISqlSchemaService.cs",
+              "RelativeDocumentMoniker": "Services\\Interfaces\\ISqlSchemaService.cs",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Services\\Interfaces\\ISqlSchemaService.cs",
+              "RelativeToolTip": "Services\\Interfaces\\ISqlSchemaService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T08:52:09.036Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ISqlConnectionService.cs",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Services\\Interfaces\\ISqlConnectionService.cs",
+              "RelativeDocumentMoniker": "Services\\Interfaces\\ISqlConnectionService.cs",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Services\\Interfaces\\ISqlConnectionService.cs",
+              "RelativeToolTip": "Services\\Interfaces\\ISqlConnectionService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T08:52:04.134Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "TemplateViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Models\\ViewModels\\TemplateViewModel.cs",
+              "RelativeDocumentMoniker": "Models\\ViewModels\\TemplateViewModel.cs",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Models\\ViewModels\\TemplateViewModel.cs",
+              "RelativeToolTip": "Models\\ViewModels\\TemplateViewModel.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAqwDgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-17T08:39:08.343Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "TemplateTypeDefinition.cs",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Models\\Entities\\TemplateTypeDefinition.cs",
+              "RelativeDocumentMoniker": "Models\\Entities\\TemplateTypeDefinition.cs",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Models\\Entities\\TemplateTypeDefinition.cs",
+              "RelativeToolTip": "Models\\Entities\\TemplateTypeDefinition.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T08:50:19.542Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "TemplateField.cs",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Models\\Entities\\TemplateField.cs",
+              "RelativeDocumentMoniker": "Models\\Entities\\TemplateField.cs",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Models\\Entities\\TemplateField.cs",
+              "RelativeToolTip": "Models\\Entities\\TemplateField.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T08:50:24.787Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "TableColumnInfo.cs",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Models\\Entities\\TableColumnInfo.cs",
+              "RelativeDocumentMoniker": "Models\\Entities\\TableColumnInfo.cs",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Models\\Entities\\TableColumnInfo.cs",
+              "RelativeToolTip": "Models\\Entities\\TableColumnInfo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T08:50:12.729Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "ConfigEntry.cs",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Models\\Entities\\ConfigEntry.cs",
+              "RelativeDocumentMoniker": "Models\\Entities\\ConfigEntry.cs",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Models\\Entities\\ConfigEntry.cs",
+              "RelativeToolTip": "Models\\Entities\\ConfigEntry.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T08:50:07.03Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "ServerInfo.cs",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Models\\Entities\\ServerInfo.cs",
+              "RelativeDocumentMoniker": "Models\\Entities\\ServerInfo.cs",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Models\\Entities\\ServerInfo.cs",
+              "RelativeToolTip": "Models\\Entities\\ServerInfo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T08:50:00.986Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "TemplateType.cs",
+              "DocumentMoniker": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Models\\Enums\\TemplateType.cs",
+              "RelativeDocumentMoniker": "Models\\Enums\\TemplateType.cs",
+              "ToolTip": "C:\\Users\\krish.maniar\\Desktop\\Template-Builder\\Template-Builder\\Models\\Enums\\TemplateType.cs",
+              "RelativeToolTip": "Models\\Enums\\TemplateType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T08:51:05.987Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
